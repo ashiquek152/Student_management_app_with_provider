@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student_app_provider/db/models/student_model.dart';
@@ -72,11 +71,9 @@ List<StudentModel> studentModelList = [];
   }
 }
 
-File?
-    image; //File is a reference to a file on  system storatge (path of the file)
+File? image; //File is a reference to a file on  system storatge (path of the file)
 String stringOfimg = '';
-
-class ImageController extends GetxController {
+class ImageNotifier extends ChangeNotifier {
   pickimage() async {
     final galleryImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -84,9 +81,10 @@ class ImageController extends GetxController {
       return;
     } else {
       image = File(galleryImage.path);
-      update();
+      notifyListeners();
       final bytes = File(galleryImage.path).readAsBytesSync();
       stringOfimg = base64Encode(bytes);
+      notifyListeners();
     }
   }
 }

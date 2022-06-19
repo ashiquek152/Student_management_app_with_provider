@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app_provider/db/models/student_model.dart';
@@ -18,7 +19,7 @@ class Addstudent extends StatelessWidget {
   final _regController = TextEditingController();
   final _batchController = TextEditingController();
 
-  final imageController = Get.put(ImageController());
+  // final imageController = Get.put(ImageController());
   final formvalidationKey = GlobalKey<FormState>();
 
   @override
@@ -37,8 +38,8 @@ class Addstudent extends StatelessWidget {
             key: formvalidationKey,
             child: ListView(
               children: [
-                GetBuilder<ImageController>(builder: (controller) {
-                  return Center(
+                Consumer<ImageNotifier>(builder: (context, value, child) {
+                     return Center(
                     child: Container(
                       height: 100,
                       width: 100,
@@ -56,9 +57,9 @@ class Addstudent extends StatelessWidget {
                           : Container(),
                     ),
                   );
-                }),
+                },),
                 IconButton(
-                    onPressed: () async =>imageController.pickimage(),
+                    onPressed: () async =>Provider.of<ImageNotifier>(context,listen: false).pickimage(),
                     icon:
                         const Icon(Icons.camera, color: Colors.red, size: 20)),
                 const SizedBox(height: 20),

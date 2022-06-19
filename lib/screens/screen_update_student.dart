@@ -1,8 +1,7 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:student_app_provider/db/models/student_model.dart';
@@ -21,7 +20,7 @@ class EditStudent extends StatelessWidget {
   final _regController = TextEditingController();
   final _batchController = TextEditingController();
 
-  final imageController =Get.put(ImageController()) ;
+  // final imageController =Get.put(ImageController()) ;
 
   EditStudent({Key? key, required this.data, required this.editorClicked})
       : super(key: key);
@@ -47,8 +46,9 @@ class EditStudent extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: ListView(
             children: [
-              GetBuilder<ImageController>(builder: (controller) {
-                if (editorClicked == true) {
+
+              Consumer<ImageNotifier>(builder: (context, value, child) {
+                  if (editorClicked == true) {
                   stringOfimg = data.image;
                   editorClicked = false;
                 }
@@ -57,9 +57,9 @@ class EditStudent extends StatelessWidget {
                   backgroundImage:
                       MemoryImage(const Base64Decoder().convert(stringOfimg))
                 );
-              }),
+              },),
               IconButton(
-                onPressed: () async =>  imageController.pickimage(),
+                onPressed: () async =>Provider.of<ImageNotifier>(context,listen: false).pickimage(),
                 icon: const Icon(
                   Icons.camera,
                   color: Colors.red)),
