@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: Consumer<ScreenController>(
-            builder: (context, data, child) =>StudentsList(data: data)
+            builder: (context, data, child) =>StudentsList(data: data,search: false)
           ),
         ),
       ),

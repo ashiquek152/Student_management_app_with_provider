@@ -52,7 +52,7 @@ List<StudentModel> studentModelList = [];
 
   }
 
-  searchdata(String value) {
+  searchInData(String value) {
     searchData.clear();
     for (var items in studentModelList) {
       if (items.name.toString().toLowerCase().contains(value.toLowerCase())) {
@@ -73,6 +73,7 @@ List<StudentModel> studentModelList = [];
 
 File? image; //File is a reference to a file on  system storatge (path of the file)
 String stringOfimg = '';
+
 class ImageNotifier extends ChangeNotifier {
   pickimage() async {
     final galleryImage =

@@ -35,7 +35,7 @@ class SearchPage extends StatelessWidget {
                     child: CupertinoSearchTextField(
                       controller: searchController,
                       onChanged: (value) {
-                        context.read<ScreenController>().searchdata(value);
+                        Provider.of<ScreenController>(context,listen: false).searchInData(value);
                       },
                     ),
                   ),
@@ -44,7 +44,7 @@ class SearchPage extends StatelessWidget {
             ),
             Provider.of<ScreenController>(context).searchData.isNotEmpty? 
             Expanded(child: Consumer<ScreenController>(
-              builder: (context, data, child) =>StudentsList(data: data))):
+              builder: (context, data, child) =>StudentsList(data: data,search: true))):
               Container(),
           ],
         ),
