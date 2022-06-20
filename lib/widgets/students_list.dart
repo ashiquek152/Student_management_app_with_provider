@@ -15,15 +15,15 @@ class StudentsList extends StatelessWidget {
   StudentsList({Key? key, required this.data, required this.search})
       : super(key: key);
 
-  final ScreenController data;
+  final ScreenProvider data;
   final bool search;
   dynamic images;
 
   @override
   Widget build(BuildContext context) {
     List<StudentModel> listData = search == true
-            ? Provider.of<ScreenController>(context).searchData
-            : Provider.of<ScreenController>(context).studentModelList;
+            ? Provider.of<ScreenProvider>(context).searchData
+            : Provider.of<ScreenProvider>(context).studentModelList;
           
     return ListView.separated(
       separatorBuilder: (context, index) => const Divider(height: 1),
@@ -57,7 +57,7 @@ class StudentsList extends StatelessWidget {
                         confirm: TextButton(
                             onPressed: () {
                               context
-                                  .read<ScreenController>()
+                                  .read<ScreenProvider>()
                                   .deleteData(listData[index].id!);
                               Get.back();
                             },

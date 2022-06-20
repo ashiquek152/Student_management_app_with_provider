@@ -20,7 +20,8 @@ class SearchPage extends StatelessWidget {
         leading: IconButton(icon:const Icon( Icons.arrow_back),onPressed: ()=>Get.off(()=>HomeScreen())),
         elevation: 0,
         backgroundColor: scaffoldBG,
-        title: const Text("Search student details"),
+        title: const Text("SEARCH STUDENT",
+          style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       backgroundColor: scaffoldBG,
@@ -34,16 +35,14 @@ class SearchPage extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     child: CupertinoSearchTextField(
                       controller: searchController,
-                      onChanged: (value) {
-                        Provider.of<ScreenController>(context,listen: false).searchInData(value);
-                      },
+                      onChanged: (value)=>Provider.of<ScreenProvider>(context,listen: false).searchInData(value),         
                     ),
                   ),
                 ),
               ],
             ),
-            Provider.of<ScreenController>(context).searchData.isNotEmpty? 
-            Expanded(child: Consumer<ScreenController>(
+            Provider.of<ScreenProvider>(context).searchData.isNotEmpty? 
+            Expanded(child: Consumer<ScreenProvider>(
               builder: (context, data, child) =>StudentsList(data: data,search: true))):
               Container(),
           ],

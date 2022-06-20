@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:student_app_provider/db/models/student_model.dart';
 import 'package:student_app_provider/provider/student_model_provider.dart';
 import 'package:student_app_provider/screens/screen_home.dart';
+import 'package:student_app_provider/widgets/image_picker_bottomsheet.dart';
 import 'package:student_app_provider/widgets/text_filed.dart';
 import 'package:provider/provider.dart';
-
 
 class Addstudent extends StatelessWidget {
   Addstudent({Key? key, this.data}) : super(key: key);
@@ -19,7 +19,6 @@ class Addstudent extends StatelessWidget {
   final _regController = TextEditingController();
   final _batchController = TextEditingController();
 
-  // final imageController = Get.put(ImageController());
   final formvalidationKey = GlobalKey<FormState>();
 
   @override
@@ -27,9 +26,12 @@ class Addstudent extends StatelessWidget {
     return Scaffold(
       backgroundColor: scaffoldBG,
       appBar: AppBar(
-        leading: IconButton(icon:const Icon( Icons.arrow_back),onPressed: ()=>Get.off(()=>HomeScreen())),
-        title: const Text('Add student details'),
-        backgroundColor:scaffoldBG,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(icon: const Icon(Icons.arrow_back),onPressed: () => Get.off(() => HomeScreen())),
+        title: const Text('ADD STUDENT DETAILS',
+          style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: scaffoldBG,
       ),
       body: SafeArea(
         child: Padding(
@@ -38,36 +40,34 @@ class Addstudent extends StatelessWidget {
             key: formvalidationKey,
             child: ListView(
               children: [
-                Consumer<ImageNotifier>(builder: (context, value, child) {
-                     return Center(
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                  "images/blank-profile-picture-973460_1280.webp"))),
-                      child: stringOfimg.trim().isNotEmpty
-                          ? CircleAvatar(
-                              backgroundImage: MemoryImage(const Base64Decoder()
-                                  .convert(stringOfimg)),
-                            )
-                          : Container(),
-                    ),
-                  );
-                },),
+                Consumer<ImageNotifier>(
+                  builder: (context, value, child) {
+                    return Center(
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            image: const DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage(
+                                    "images/blank-profile-picture-973460_1280.webp"))),
+                        child: stringOfimg.trim().isNotEmpty?
+                                CircleAvatar(backgroundImage:MemoryImage(const Base64Decoder().convert(stringOfimg))):
+                                 Container()));}),
                 IconButton(
-                    onPressed: () async =>Provider.of<ImageNotifier>(context,listen: false).pickimage(),
-                    icon:
-                        const Icon(Icons.camera, color: Colors.red, size: 20)),
+                    onPressed: () {
+                      Get.bottomSheet(
+                          backgroundColor: Colors.white,
+                          const ImagePickBottomSheet());
+                    },
+                    icon: const Icon(Icons.add_a_photo_outlined,color: Colors.white,)),
                 const SizedBox(height: 20),
-                Textfeild(regController: _nameController, hintText: "Name",keyboardType: TextInputType.name),
-                Textfeild(regController: _ageController, hintText: "Age",keyboardType: TextInputType.number),
-                Textfeild(regController: _placeController, hintText: "Place",keyboardType: TextInputType.text),
-                Textfeild(regController: _batchController, hintText: "Batch",keyboardType: TextInputType.text),
-                Textfeild(regController: _regController, hintText: "Reg No",keyboardType: TextInputType.number),
+                Textfeild(regController: _nameController,hintText: "Name",keyboardType: TextInputType.name),
+                Textfeild(regController: _ageController,hintText: "Age",keyboardType: TextInputType.number),
+                Textfeild(regController: _placeController,hintText: "Place",keyboardType: TextInputType.text),
+                Textfeild(regController: _batchController,hintText: "Batch",keyboardType: TextInputType.text),
+                Textfeild(regController: _regController,hintText: "Reg No",keyboardType: TextInputType.number),
                 Center(
                   child: ElevatedButton.icon(
                       onPressed: () {
@@ -115,10 +115,12 @@ class Addstudent extends StatelessWidget {
         regNo: reg,
         image: stringOfimg,
       );
-     await Provider.of<ScreenController>(context,listen: false).addstudentData(student);
-      Get.snackbar("Added", "Data added successfully", barBlur: 50.0,
-    backgroundColor: Colors.black45,
-        colorText:Colors.white );
+      await Provider.of<ScreenProvider>(context, listen: false)
+          .addstudentData(student);
+      Get.snackbar("Added", "Data added successfully",
+          barBlur: 50.0,
+          backgroundColor: Colors.black45,
+          colorText: Colors.white);
       clearFields();
       Get.offAll(() => HomeScreen());
     }

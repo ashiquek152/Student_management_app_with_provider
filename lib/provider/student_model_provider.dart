@@ -8,7 +8,7 @@ import 'package:student_app_provider/db/models/student_model.dart';
 
 
 
-class ScreenController extends ChangeNotifier {
+class ScreenProvider extends ChangeNotifier {
 
 List<StudentModel> searchData = [];
 List<StudentModel> studentModelList = [];
@@ -75,9 +75,22 @@ File? image; //File is a reference to a file on  system storatge (path of the fi
 String stringOfimg = '';
 
 class ImageNotifier extends ChangeNotifier {
-  pickimage() async {
+  pickGalleryImage() async {
     final galleryImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (galleryImage == null) {
+      return;
+    } else {
+      image = File(galleryImage.path);
+      notifyListeners();
+      final bytes = File(galleryImage.path).readAsBytesSync();
+      stringOfimg = base64Encode(bytes);
+      notifyListeners();
+    }
+  }
+  pickCameraImage() async {
+    final galleryImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
     if (galleryImage == null) {
       return;
     } else {

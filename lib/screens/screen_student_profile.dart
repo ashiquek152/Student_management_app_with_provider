@@ -23,7 +23,8 @@ class ProfileStudent extends StatelessWidget {
             onPressed: () => Get.off(() => HomeScreen())),
         elevation: 0,
         centerTitle: true,
-        title: const Text('Student Details'),
+        title: const Text('Student Details',
+          style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: scaffoldBG,
       ),
       body: SafeArea(

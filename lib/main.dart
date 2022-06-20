@@ -16,7 +16,7 @@ Future<void> main(List<String> args) async {
    runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ImageNotifier()),
-        ChangeNotifierProvider(create: (context) => ScreenController())],
+        ChangeNotifierProvider(create: (context) => ScreenProvider())],
       child: const MyApp()));
 }
 

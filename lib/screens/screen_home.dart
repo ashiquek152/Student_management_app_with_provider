@@ -17,11 +17,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ScreenController>().allStudentslist();
+    context.read<ScreenProvider>().allStudentslist();
     return Scaffold(
       backgroundColor: scaffoldBG,
       appBar: AppBar(
         elevation: 0,
+        centerTitle: true,
         title: const Center(
             child: Text(
           'STUDENTS LIST',
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Provider.of<ScreenController>(context,listen: false).searchData.clear();
+                Provider.of<ScreenProvider>(context,listen: false).searchData.clear();
                 Get.to(() => SearchPage());
               },
               icon: const Icon(Icons.search))
@@ -41,7 +42,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
-          child: Consumer<ScreenController>(
+          child: Consumer<ScreenProvider>(
             builder: (context, data, child) =>StudentsList(data: data,search: false)
           ),
         ),

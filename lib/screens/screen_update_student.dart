@@ -38,7 +38,8 @@ class EditStudent extends StatelessWidget {
         leading: IconButton(icon:const Icon( Icons.arrow_back),onPressed: ()=>Get.off(()=>HomeScreen())),
         elevation: 0,
         centerTitle: true,
-        title: const Text('Edit student details'),
+        title: const Text('Edit student details',
+          style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor:scaffoldBG,
       ),
       body: SafeArea(
@@ -59,7 +60,7 @@ class EditStudent extends StatelessWidget {
                 );
               },),
               IconButton(
-                onPressed: () async =>Provider.of<ImageNotifier>(context,listen: false).pickimage(),
+                onPressed: () async =>Provider.of<ImageNotifier>(context,listen: false).pickGalleryImage(),
                 icon: const Icon(
                   Icons.camera,
                   color: Colors.red)),
@@ -105,7 +106,7 @@ class EditStudent extends StatelessWidget {
         regNo: reg,
         image: stringOfimg,
         id: data.id);
-     await Provider.of<ScreenController>(context,listen: false).updateData(student);
+     await Provider.of<ScreenProvider>(context,listen: false).updateData(student);
     Get.snackbar("Updated !", "Data upadated successfully",
     barBlur: 50.0,
     backgroundColor: Colors.black45,
